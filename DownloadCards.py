@@ -1,5 +1,9 @@
 import requests
-import json
+import boto3
+import shutil
+
+s3 = boto3.client('s3')
+bucket = 'yugiohcardimages'
 
 card_endpoint = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
 staple_card_param = {
@@ -18,4 +22,15 @@ image_urls = []
 for card_data in card_data_list:
     image_urls.append(card_data.get('card_images')[0].get("image_url"))
 
+image_url = image_urls[0]
+filename = image_url.split("/")[-1]
 
+r = requests.get(image_url, stream = True)
+
+if r.status_code == 200:
+    r.raw.decode_content = True
+
+    with open('card.jpg', 'wb') as f:
+        shutil.copyfileobj(r.raw, f)
+
+s3.upload_file(filename, bucket, filename)
