@@ -3,13 +3,14 @@ import boto3
 import shutil
 import os
 
-s3 = boto3.client('s3')
-bucket = 'yugiohcardimages'
+s3_client = boto3.client('s3')
+s3_resource = boto3.client('s3')
+bucket_name = 'random-images'
 
-card_endpoint = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
-staple_card_param = {
-    'staple': 'yes'
-}
+# If the bucket already exists, this will return it
+bucket = s3.create_bucket(Bucket=bucket_name)
+
+endpoint = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
 
 resp = requests.get(card_endpoint)
 
@@ -19,7 +20,7 @@ if resp.status_code != 200:
 resp_dict = resp.json()
 card_data_list = resp_dict.get('data')
 image_urls = []
-dir = 'card_images'
+dir = 'card_images/dark_magician'
 
 if not os.path.exists(dir):
     os.makedirs(dir)
@@ -37,7 +38,7 @@ for image_url in image_urls:
 
         with open(filename, 'wb') as f:
             shutil.copyfileobj(r.raw, f)
-            s3.upload_file(filename, bucket, filename)
+            # s3.upload_file(filename, bucket, filename)
 
 print('yuGiOh cards uploaded to s3 bucket {}'.format(bucket))
 shutil.rmtree(dir)
