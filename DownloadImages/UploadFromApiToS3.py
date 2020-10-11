@@ -2,6 +2,7 @@ import requests
 import boto3
 import shutil
 import os
+import re
 
 '''
 Download images to an s3 bucket. 
@@ -24,8 +25,14 @@ def upload_api_images_to_s3(bucket_name, endpoint, query_params, json_to_image_u
     if not os.path.exists(dir):
         os.makedirs(dir)
 
-    for image_url in image_urls:
-        filename = image_url.split("/")[-1]
+    for idx, image_url in enumerate(image_urls):
+        if (image_url is None):
+            print("Image url " + str(idx))
+            continue
+
+        # filetype = re.findall("\.[a-zA-z]+", image_url)[-1]
+        filetype = ".jpg"
+        filename = 'image' + str(idx) + filetype
         full_path = dir + '/' + filename
 
         r = requests.get(image_url, stream = True)
