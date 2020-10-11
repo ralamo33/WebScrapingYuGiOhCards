@@ -11,9 +11,18 @@ param = {
 }
 
 def random_image_processor(response):
+    """[summary]
+
+    Args:
+        response ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     image_url_list = []
     for img in response:
         image_url_list.append(img['download_url'])
+        
     return image_url_list
 
 if __name__=="__main__":
