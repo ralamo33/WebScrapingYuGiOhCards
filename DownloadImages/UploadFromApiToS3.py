@@ -32,7 +32,6 @@ def upload_api_images_to_s3(bucket_name, endpoint, query_params, json_to_image_u
 
         # filetype = re.findall("\.[a-zA-z]+", image_url)[-1]
         file_id = str(count + idx)
-        print(file_id)
         filetype = ".jpg"
         filename = 'image' + file_id + filetype
         full_path = dir + '/' + filename

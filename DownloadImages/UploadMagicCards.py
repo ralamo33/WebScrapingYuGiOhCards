@@ -18,6 +18,5 @@ if __name__ == "__main__":
 
     # Each call to magic the gathering responds with only 100 cards, so to get 10,000 cards, we need 100 calls
     for page in range(100):
-        print(page)
         params['page'] = page
         upload_api_images_to_s3(bucket, endpoint, params, extract_magic_card_urls, page * 100)
