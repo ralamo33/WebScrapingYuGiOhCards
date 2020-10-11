@@ -1,6 +1,16 @@
 import boto3
 
 '''
+Clears a bucket of all files and then deletes it
+bucket_name (String): Name of bucket to be deleted
+'''
+def delete_bucket(bucket_name):
+    clear_bucket(bucket_name)
+    client = boto3.client("s3")
+    client.delete_bucket(Bucket=bucket_name)
+
+
+'''
 Clears a bucket of all files
 bucket_name (String): Name of the bucket user wants to clear
 '''
