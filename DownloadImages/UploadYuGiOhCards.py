@@ -8,4 +8,4 @@ def yugioh_func (json):
         url_list.append(card_data.get('card_images')[0].get("image_url"))
     return url_list
 
-upload_api_images_to_s3("blue-eyes4", "https://db.ygoprodeck.com/api/v7/cardinfo.php", query_params, yugioh_func)
+upload_api_images_to_s3("card-image-test", "https://db.ygoprodeck.com/api/v7/cardinfo.php", query_params, yugioh_func)

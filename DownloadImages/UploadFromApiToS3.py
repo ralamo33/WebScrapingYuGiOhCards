@@ -11,7 +11,7 @@ endpoint: (String): The api endpoint being used to gather images
 query_params: (Dict): Paramaters used to filter the api response
 response_to_image_urls: (Function): Recieves the api response, and converts it into a list of image urls
 '''
-def upload_api_images_to_s3(bucket_name, endpoint, query_params, json_to_image_urls):
+def upload_api_images_to_s3(bucket_name, endpoint, query_params, json_to_image_urls, count=0):
     s3 = boto3.client('s3')
     create_bucket_if_not_exists(s3, bucket_name)
     resp = requests.get(endpoint, query_params)
@@ -31,8 +31,10 @@ def upload_api_images_to_s3(bucket_name, endpoint, query_params, json_to_image_u
             continue
 
         # filetype = re.findall("\.[a-zA-z]+", image_url)[-1]
+        file_id = str(count + idx)
+        print(file_id)
         filetype = ".jpg"
-        filename = 'image' + str(idx) + filetype
+        filename = 'image' + file_id + filetype
         full_path = dir + '/' + filename
 
         r = requests.get(image_url, stream = True)
