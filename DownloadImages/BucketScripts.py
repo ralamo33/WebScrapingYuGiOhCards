@@ -42,5 +42,3 @@ def get_bucket_object_keys(bucket, limit=1000000):
         if idx == limit:
             break
     return keys
-
-clear_bucket("object-lock2")
