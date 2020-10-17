@@ -49,10 +49,13 @@ def upload_api_images_to_s3(bucket_name, endpoint, query_params, response_to_ima
 
         if r.status_code == 200:
             r.raw.decode_content = True
-
-            with open(full_path, 'wb') as f:
-                shutil.copyfileobj(r.raw, f)
-                s3.upload_file(full_path, bucket_name, filename)
+            try:
+                with open(full_path, 'wb') as f:
+                    shutil.copyfileobj(r.raw, f)
+                    s3.upload_file(full_path, bucket_name, filename)
+            except Exception as e:
+                print("File {} encounter an error".format(file_id))
+                print(e)
         else:
             print("Image url {} failed with response code {}!".format(image_url, r.status_code))
 
