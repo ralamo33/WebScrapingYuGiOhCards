@@ -74,11 +74,11 @@ def open_cropped_images(bucket_name, crop_box, limit=1000):
 
 
 def open_yugioh_images(limit=1000):
-    return get_cropped_images('yugiohcardimages', compute_YuGiOh_crop_box(), limit=limit)
+    return open_cropped_images('yugiohcardimages', compute_yugioh_crop_box(), limit=limit)
 
 
 def open_magic_images(limit=1000):
-    magic_images = get_cropped_images('magic-cards2', compute_magic_crop_box(), limit=limit)
+    magic_images = open_cropped_images('magic-cards2', compute_magic_crop_box(), limit=limit)
     return map(lambda img: img.resize((320, 324)), magic_images)
 
 
