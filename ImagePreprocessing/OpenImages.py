@@ -69,18 +69,18 @@ def compute_magic_crop_box():
     return compute_crop_box(bucket_name, left, top, right, bottom, width, height)
 
 
-def get_cropped_images(bucket_name, crop_box, limit=1000):
+def open_cropped_images(bucket_name, crop_box, limit=1000):
     return map(lambda img: img.crop(crop_box), open_s3_bucket(bucket_name, limit=limit))
 
 
-def get_yugioh_images(limit=1000):
+def open_yugioh_images(limit=1000):
     return get_cropped_images('yugiohcardimages', compute_YuGiOh_crop_box(), limit=limit)
 
 
-def get_magic_images(limit=1000):
+def open_magic_images(limit=1000):
     magic_images = get_cropped_images('magic-cards2', compute_magic_crop_box(), limit=limit)
     return map(lambda img: img.resize((320, 324)), magic_images)
 
 
-def get_random_images(limit=1000):
+def open_random_images(limit=1000):
     return map(lambda img: img.resize((320, 324)), open_s3_bucket('random-images2'), limit=limit)
