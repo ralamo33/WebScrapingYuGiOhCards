@@ -2,9 +2,7 @@ import requests
 import boto3
 import shutil
 import os
-
-from Exceptions.RequestException import ApiRequestError
-
+from yugioh_image_classifier.custom_exceptions.RequestException import ApiRequestError
 
 def upload_api_images_to_s3(bucket_name, endpoint, query_params, response_to_image_urls, count=0):
     """
